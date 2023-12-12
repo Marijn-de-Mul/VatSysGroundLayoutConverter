@@ -11,7 +11,11 @@ def format_line(input_string):
     split_string = input_string.split(',')
     if len(split_string) < 3:
         return None
-    formatted_string = '+{0:09.6f}+{1:010.6f}'.format(float(split_string[1]), float(split_string[0]))
+    lat = float(split_string[1])
+    lon = float(split_string[0])
+    formatted_lat = '{0:+.6f}'.format(lat).zfill(10)
+    formatted_lon = '{0:+.6f}'.format(lon).zfill(11)
+    formatted_string = formatted_lat + formatted_lon
     return formatted_string
 
 def process_polygon(f, section_name, map_type, map_name, priority, infill_name, write_opening_map_tag, write_closing_map_tag):
@@ -36,19 +40,16 @@ def process_polygon(f, section_name, map_type, map_name, priority, infill_name, 
         latitudes.pop(0)
         longitudes.pop(0)
 
+    def format_coordinate(lat, lon):
+        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
     center_lat = (min_lat + max_lat) / 2
     center_lon = (min_lon + max_lon) / 2
-    center_coordinate = '+{0:03.6f}+{1:02.6f}'.format(center_lon, center_lat) 
 
-    parts = center_coordinate.split("+")
-    lat = parts[1]
-    lon = parts[2]
-    if '.' in lat and len(lat.split('.')[0]) < 2:
-        lat = '0' + lat
-    center_coordinate = '+' + lat + '+' + lon
-
+    center_coordinate = format_coordinate(center_lat, center_lon)
+    
     airport_ICAO = os.path.splitext(os.path.basename(kml_file))[0]
     custom_color = ' CustomColourName="DeepLush"' if airport_ICAO.startswith('WI') and map_type == 'Ground_BAK' else ''
 
@@ -82,18 +83,15 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
         latitudes.pop(0)
         longitudes.pop(0)
 
+    def format_coordinate(lat, lon):
+        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
     center_lat = (min_lat + max_lat) / 2
     center_lon = (min_lon + max_lon) / 2
-    center_coordinate = '+{0:03.6f}+{1:02.6f}'.format(center_lon, center_lat) 
 
-    parts = center_coordinate.split("+")
-    lat = parts[1]
-    lon = parts[2]
-    if '.' in lat and len(lat.split('.')[0]) < 2:
-        lat = '0' + lat
-    center_coordinate = '+' + lat + '+' + lon
+    center_coordinate = format_coordinate(center_lat, center_lon)
 
     airport_ICAO = os.path.splitext(os.path.basename(kml_file))[0]
     custom_color = ''
@@ -141,18 +139,15 @@ def process_label(f, section_name, map_type, map_name, priority, write_opening_m
             else:
                 sibling = sibling.getnext()
 
+    def format_coordinate(lat, lon):
+        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
     center_lat = (min_lat + max_lat) / 2
     center_lon = (min_lon + max_lon) / 2
-    center_coordinate = '+{0:03.6f}+{1:02.6f}'.format(center_lon, center_lat) 
 
-    parts = center_coordinate.split("+")
-    lat = parts[1]
-    lon = parts[2]
-    if '.' in lat and len(lat.split('.')[0]) < 2:
-        lat = '0' + lat
-    center_coordinate = '+' + lat + '+' + lon
+    center_coordinate = format_coordinate(center_lat, center_lon)
 
     if write_opening_map_tag:
         f.write(f'    <Map Type="{map_type}" Name="SMR_{os.path.splitext(os.path.basename(kml_file))[0]}_{map_name}" Priority="{priority}" Center="{center_coordinate}" CustomColourName="TremendouslyLightGrey">\n')
@@ -199,6 +194,8 @@ for kml_file in kml_files:
 
     temp_tree = etree.parse(os.path.join('Temp', 'temp.kml'))
     temp_root = temp_tree.getroot()
+
+    print(os.path.splitext(os.path.basename(kml_file))[0])
 
     with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  
         f.write('<?xml version="1.0" encoding="utf-8"?>\n<Maps>\n')
