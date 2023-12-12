@@ -2,10 +2,8 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
 	<name>WIBB.kml</name>
-	<Folder>
-		<name>WIBB</name>
-		<Folder>
-			<name>Poly</name>
+	<name>WIBB</name>
+		<name>Poly</name>
 			<name>GrassBG</name>
 				<Polygon>
 					<LinearRing>
@@ -46,11 +44,8 @@
 							</coordinates>
 						</LinearRing>
 					</Polygon>
-			</Folder>
-		<Folder>
 			<name>Line</name>
-			<Folder>
-				<name>Twy</name>
+			<name>Twy</name>
 				<name>Twy1</name>
 					<LineString>
 						<coordinates>
@@ -93,8 +88,6 @@
 							101.4417186004283,0.4690370701625688,0 101.4415401211147,0.4691934134668366,0 101.4414693079081,0.469256228945727,0 101.4414440912642,0.4692968109889773,0 101.441439011954,0.4693399546669169,0 101.4414407100775,0.4694504636781829,0 
 						</coordinates>
 					</LineString>
-				</Folder>
-			<Folder>
 				<name>SB</name>
 				<name>SB1</name>
 					<LineString>
@@ -120,8 +113,6 @@
 							101.4435153006083,0.4524033419766446,0 101.4434985027259,0.4520315605353464,0 
 						</coordinates>
 					</LineString>
-				</Folder>
-			<Folder>
 				<name>Bay</name>
 				<name>Bay14</name>
 					<LineString>
@@ -207,12 +198,8 @@
 							101.4468634822412,0.4625104003127217,0 101.4461174343035,0.4625341291341829,0 
 						</coordinates>
 					</LineString>
-				</Folder>
-		</Folder>
-		<Folder>
-			<name>Lab</name>
-			<Folder>
-				<name>Twy</name>
+				<name>Lab</name>
+			<name>Twy</name>
 				<name>C</name>
 					<Point>
 						<coordinates>101.442757601413,0.4680688969884917,0</coordinates>
@@ -225,8 +212,6 @@
 					<Point>
 						<coordinates>101.4455980732185,0.46379665557641,0</coordinates>
 					</Point>
-				</Folder>
-			<Folder>
 				<name>Bay</name>
 				<name>D01</name>
 					<Point>
@@ -276,8 +261,6 @@
 					<Point>
 						<coordinates>101.4467927444459,0.4625284199133937,0</coordinates>
 					</Point>
-				</Folder>
-			<Folder>
 				<name>Misc</name>
 				<name>N Mil Apron</name>
 					<Point>
@@ -287,8 +270,5 @@
 					<Point>
 						<coordinates>101.4401479625014,0.4523296193714742,0</coordinates>
 					</Point>
-				</Folder>
-		</Folder>
-	</Folder>
-</Document>
+				</Document>
 </kml>
