@@ -59,8 +59,11 @@ def process_section(f, section_name, map_type, map_name, priority, infill_name, 
         lat = '0' + lat
     center_coordinate = '+' + lat + '+' + lon
 
+    airport_ICAO = os.path.splitext(os.path.basename(kml_file))[0]
+    custom_color = ' CustomColourName="DeepLush"' if airport_ICAO.startswith('WI') and map_type == 'Ground_BAK' else ''
+
     if write_opening_map_tag:
-        f.write(f'    <Map Type="{map_type}" Name="SMR_{os.path.splitext(os.path.basename(kml_file))[0]}_{map_name}" Priority="{priority}" Center="{center_coordinate}">\n')
+        f.write(f'    <Map Type="{map_type}" Name="SMR_{airport_ICAO}_{map_name}" Priority="{priority}" Center="{center_coordinate}"{custom_color}>\n')
     f.write(f'        <Infill Name="{infill_name}">\n')
     f.write('            ' + '/\n            '.join(coordinates) + '\n')
     f.write('        </Infill>\n')

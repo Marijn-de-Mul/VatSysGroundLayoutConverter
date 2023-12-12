@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Maps>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_BAK" Priority="6" Center="+01.122596+104.116769">
+    <Map Type="Ground_BAK" Name="SMR_WIDD_BAK" Priority="6" Center="+01.122596+104.116769" CustomColourName="DeepLush">
         <Infill Name="GrassBG">
             +01.146365+104.127604/
             +01.108941+104.094482/
@@ -8,7 +8,7 @@
             +01.136219+104.139056
         </Infill>
     </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.111511+104.109639">
+    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.111511+104.109639" CustomColourName="DeepLush">
         <Infill Name="GrassHole1">
             +01.115005+104.113195/
             +01.115072+104.113194/
