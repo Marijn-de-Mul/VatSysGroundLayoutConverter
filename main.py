@@ -105,7 +105,36 @@ for kml_file in kml_files:
 
     with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  # Change 'w' to 'a'
         f.write('<?xml version="1.0" encoding="utf-8"?>\n<Maps>\n')
+
         process_section(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG')
-        process_section(f, 'GrassHole1', 'Ground_BAK', 'HOLES', '4', 'GrassHole1')
+        
+        hole_number = 1
+        while True:
+            section_name = 'GrassHole{}'.format(hole_number)
+            if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
+                process_section(f, section_name, 'Ground_BAK', 'HOLES', '4', section_name)
+                hole_number += 1
+            else:
+                break
+
         process_section(f, 'Move', 'Ground_APR', 'MOVE', '5','Movement_Areas')
+
+        building_number = 1
+        while True:
+            section_name = 'Bldg{}'.format(building_number)
+            if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
+                process_section(f, section_name, 'Ground_BLD', 'BLD', '4', section_name)
+                building_number += 1
+            else:
+                break
+
+        runway_number = 1
+        while True:
+            section_name = 'Rwy{}'.format(runway_number)
+            if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
+                process_section(f, section_name, 'Ground_RWY', 'RWY', '4', section_name)
+                runway_number += 1
+            else:
+                break
+
         f.write('</Maps>\n')
