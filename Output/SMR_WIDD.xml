@@ -39,8 +39,6 @@
             +01.107981+104.107071/
             +01.114906+104.113178
         </Infill>
-    </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.117675+104.114517">
         <Infill Name="GrassHole2">
             +01.119357+104.117034/
             +01.119468+104.117045/
@@ -72,8 +70,6 @@
             +01.116493+104.114569/
             +01.119241+104.117011
         </Infill>
-    </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.123367+104.119467">
         <Infill Name="GrassHole3">
             +01.124412+104.121475/
             +01.124819+104.121682/
@@ -105,8 +101,6 @@
             +01.119996+104.117668/
             +01.124018+104.121230
         </Infill>
-    </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.128906+104.125080">
         <Infill Name="GrassHole4">
             +01.131533+104.127732/
             +01.131618+104.127718/
@@ -135,8 +129,6 @@
             +01.125599+104.122632/
             +01.131413+104.127737
         </Infill>
-    </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.122309+104.117280">
         <Infill Name="GrassHole5">
             +01.122495+104.117691/
             +01.122680+104.117840/
@@ -159,8 +151,6 @@
             +01.121777+104.117049/
             +01.122158+104.117400
         </Infill>
-    </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIDD_HOLES" Priority="4" Center="+01.110473+104.106267">
         <Infill Name="GrassHole6">
             +01.111147+104.107608/
             +01.111239+104.107650/

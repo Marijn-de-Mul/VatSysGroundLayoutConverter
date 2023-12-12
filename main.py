@@ -13,7 +13,7 @@ def format_line(input_string):
     formatted_string = '+{0:09.6f}+{1:010.6f}'.format(float(split_string[1]), float(split_string[0]))
     return formatted_string
 
-def process_section(f, section_name, map_type, map_name, priority, infill_name):
+def process_section(f, section_name, map_type, map_name, priority, infill_name, write_opening_map_tag, write_closing_map_tag):
     coordinates = []
     latitudes = []
     longitudes = []
@@ -36,7 +36,7 @@ def process_section(f, section_name, map_type, map_name, priority, infill_name):
         else:
             print(f"No Polygon found for section: {section_name}")  # Debug print
             return
-
+        
     if not coordinates:
         print(f"No coordinates found for section: {section_name}")  # Debug print
         return
@@ -59,11 +59,13 @@ def process_section(f, section_name, map_type, map_name, priority, infill_name):
         lat = '0' + lat
     center_coordinate = '+' + lat + '+' + lon
 
-    f.write(f'    <Map Type="{map_type}" Name="SMR_{os.path.splitext(os.path.basename(kml_file))[0]}_{map_name}" Priority="{priority}" Center="{center_coordinate}">\n')
+    if write_opening_map_tag:
+        f.write(f'    <Map Type="{map_type}" Name="SMR_{os.path.splitext(os.path.basename(kml_file))[0]}_{map_name}" Priority="{priority}" Center="{center_coordinate}">\n')
     f.write(f'        <Infill Name="{infill_name}">\n')
     f.write('            ' + '/\n            '.join(coordinates) + '\n')
     f.write('        </Infill>\n')
-    f.write('    </Map>\n')
+    if write_closing_map_tag:
+        f.write('    </Map>\n')
 
 
 for kml_file in kml_files:
@@ -106,24 +108,30 @@ for kml_file in kml_files:
     with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  # Change 'w' to 'a'
         f.write('<?xml version="1.0" encoding="utf-8"?>\n<Maps>\n')
 
-        process_section(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG')
-        
+        process_section(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG', True, True)
+
         hole_number = 1
         while True:
             section_name = 'GrassHole{}'.format(hole_number)
+            next_section_name = 'GrassHole{}'.format(hole_number + 1)
+            write_opening_map_tag = hole_number == 1
+            write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
             if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
-                process_section(f, section_name, 'Ground_BAK', 'HOLES', '4', section_name)
+                process_section(f, section_name, 'Ground_BAK', 'HOLES', '4', section_name, write_opening_map_tag, write_closing_map_tag)
                 hole_number += 1
             else:
                 break
 
-        process_section(f, 'Move', 'Ground_APR', 'MOVE', '5','Movement_Areas')
+        process_section(f, 'Move', 'Ground_APR', 'MOVE', '5', 'Movement_Areas', True, True)
 
         building_number = 1
         while True:
             section_name = 'Bldg{}'.format(building_number)
+            next_section_name = 'Bldg{}'.format(building_number + 1)
+            write_opening_map_tag = building_number == 1
+            write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
             if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
-                process_section(f, section_name, 'Ground_BLD', 'BLD', '4', section_name)
+                process_section(f, section_name, 'Ground_BLD', 'BLD', '4', section_name, write_opening_map_tag, write_closing_map_tag)
                 building_number += 1
             else:
                 break
@@ -131,8 +139,11 @@ for kml_file in kml_files:
         runway_number = 1
         while True:
             section_name = 'Rwy{}'.format(runway_number)
+            next_section_name = 'Rwy{}'.format(runway_number + 1)
+            write_opening_map_tag = runway_number == 1
+            write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
             if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
-                process_section(f, section_name, 'Ground_RWY', 'RWY', '4', section_name)
+                process_section(f, section_name, 'Ground_RWY', 'RWY', '4', section_name, write_opening_map_tag, write_closing_map_tag)
                 runway_number += 1
             else:
                 break
