@@ -1,5 +1,6 @@
 from lxml import etree
 import glob
+import shutil
 import os
 
 kml_files = glob.glob('Input/*.kml')
@@ -18,7 +19,6 @@ def process_polygon(f, section_name, map_type, map_name, priority, infill_name, 
     latitudes = []
     longitudes = []
     for name in temp_root.findall(".//kml:name[.='{}']".format(section_name), namespaces):
-        print(f"Found section: {section_name}")  # Debug print
         polygon = name.getnext()
         if polygon is not None and polygon.tag == "{http://www.opengis.net/kml/2.2}Polygon":
             coordinates_element = polygon.find(".//kml:coordinates", namespaces)
@@ -30,16 +30,6 @@ def process_polygon(f, section_name, map_type, map_name, priority, infill_name, 
                         lat, lon = map(float, coordinate.split(',')[:2])
                         latitudes.append(lat)
                         longitudes.append(lon)
-            else:
-                print(f"No coordinates found for section: {section_name}")  # Debug print
-                return
-        else:
-            print(f"No Polygon found for section: {section_name}")  # Debug print
-            return
-        
-    if not coordinates:
-        print(f"No coordinates found for section: {section_name}")  # Debug print
-        return
 
     if coordinates[0] == coordinates[-1]:
         coordinates.pop(0)
@@ -75,7 +65,6 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
     latitudes = []
     longitudes = []
     for name in temp_root.findall(".//kml:name[.='{}']".format(section_name), namespaces):
-        print(f"Found section: {section_name}")  # Debug print
         polygon = name.getnext()
         if polygon is not None and polygon.tag == "{http://www.opengis.net/kml/2.2}LineString":
             coordinates_element = polygon.find(".//kml:coordinates", namespaces)
@@ -87,16 +76,6 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
                         lat, lon = map(float, coordinate.split(',')[:2])
                         latitudes.append(lat)
                         longitudes.append(lon)
-            else:
-                print(f"No coordinates found for section: {section_name}")  # Debug print
-                return
-        else:
-            print(f"No Polygon found for section: {section_name}")  # Debug print
-            return
-        
-    if not coordinates:
-        print(f"No coordinates found for section: {section_name}")  # Debug print
-        return
 
     if coordinates[0] == coordinates[-1]:
         coordinates.pop(0)
@@ -138,6 +117,52 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
     if write_closing_map_tag:
         f.write('    </Map>\n')
 
+def process_label(f, section_name, map_type, map_name, priority, write_opening_map_tag, write_closing_map_tag):
+    labels = []
+    latitudes = []
+    longitudes = []
+    for name in temp_root.findall(".//kml:name[.='{}']".format(section_name), namespaces):
+        sibling = name.getnext()
+        while sibling is not None:
+            if sibling.tag == "{http://www.opengis.net/kml/2.2}name":
+                label_name = sibling.text
+                point = sibling.getnext()
+                if point is not None and point.tag == "{http://www.opengis.net/kml/2.2}Point":
+                    coordinates_element = point.find(".//kml:coordinates", namespaces)
+                    if coordinates_element is not None:
+                        coordinate = coordinates_element.text.strip()
+                        formatted_coordinate = format_line(coordinate)
+                        if formatted_coordinate is not None:
+                            labels.append((label_name, formatted_coordinate))
+                            lat, lon = map(float, coordinate.split(',')[:2])
+                            latitudes.append(lat)
+                            longitudes.append(lon)
+                sibling = point.getnext()
+            else:
+                sibling = sibling.getnext()
+
+    min_lat, max_lat = min(latitudes), max(latitudes)
+    min_lon, max_lon = min(longitudes), max(longitudes)
+    center_lat = (min_lat + max_lat) / 2
+    center_lon = (min_lon + max_lon) / 2
+    center_coordinate = '+{0:03.6f}+{1:02.6f}'.format(center_lon, center_lat) 
+
+    parts = center_coordinate.split("+")
+    lat = parts[1]
+    lon = parts[2]
+    if '.' in lat and len(lat.split('.')[0]) < 2:
+        lat = '0' + lat
+    center_coordinate = '+' + lat + '+' + lon
+
+    if write_opening_map_tag:
+        f.write(f'    <Map Type="{map_type}" Name="SMR_{os.path.splitext(os.path.basename(kml_file))[0]}_{map_name}" Priority="{priority}" Center="{center_coordinate}" CustomColourName="TremendouslyLightGrey">\n')
+    f.write(f'        <Label HasLeader="False" Alignment="Center" VerticalAlignment="Middle">\n')
+    for label_name, label_coordinate in labels:
+        f.write(f'            <Point Name="{label_name}">{label_coordinate}</Point>\n')
+    f.write('        </Label>\n')
+    if write_closing_map_tag:
+        f.write('    </Map>\n')
+
 for kml_file in kml_files:
     tree = etree.parse(kml_file)
     root = tree.getroot()
@@ -152,7 +177,7 @@ for kml_file in kml_files:
         for element in root.findall('.//gx:' + element_name, namespaces):
             element.getparent().remove(element)
 
-    for element_name in ['styleUrl', 'Placemark', 'tessellate', 'outerBoundaryIs', 'open', 'Folder']:
+    for element_name in ['styleUrl', 'Placemark', 'tessellate', 'outerBoundaryIs', 'open']:
         for element in root.findall('.//kml:' + element_name, namespaces):
             element.getparent().extend(element)
             element.getparent().remove(element)
@@ -175,7 +200,7 @@ for kml_file in kml_files:
     temp_tree = etree.parse(os.path.join('Temp', 'temp.kml'))
     temp_root = temp_tree.getroot()
 
-    with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  # Change 'w' to 'a'
+    with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  
         f.write('<?xml version="1.0" encoding="utf-8"?>\n<Maps>\n')
 
         process_polygon(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG', True, True)
@@ -253,5 +278,10 @@ for kml_file in kml_files:
                 stopbar_number += 1
             else:
                 break
+        
+        process_label(f, 'Bay', 'Ground_INF', 'BAY', '1', True, True)
+        process_label(f, 'Twy', 'Ground_INF', 'TWY', '1', True, True)
 
         f.write('</Maps>\n')
+    
+    shutil.rmtree('Temp/')
