@@ -214,9 +214,9 @@ for kml_file in kml_files:
             else:
                 break
 
-        move_number = 0
+        move_number = 1
         while True:
-            if move_number == 0:
+            if move_number == 1:
                 section_name = 'Move'
             else:
                 section_name = 'Move{}'.format(move_number)
