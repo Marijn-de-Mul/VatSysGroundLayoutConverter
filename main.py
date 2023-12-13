@@ -214,7 +214,20 @@ for kml_file in kml_files:
             else:
                 break
 
-        process_polygon(f, 'Move', 'Ground_APR', 'MOVE', '5', 'Movement_Areas', True, True)
+        move_number = 0
+        while True:
+            if move_number == 0:
+                section_name = 'Move'
+            else:
+                section_name = 'Move{}'.format(move_number)
+            next_section_name = 'Move{}'.format(move_number + 1)
+            write_opening_map_tag = move_number == 0
+            write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
+            if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
+                process_polygon(f, section_name, 'Ground_APR', 'MOVE', '5', section_name, write_opening_map_tag, write_closing_map_tag)
+                move_number += 1
+            else:
+                break
 
         building_number = 1
         while True:
