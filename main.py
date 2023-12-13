@@ -2,6 +2,7 @@ from lxml import etree
 import glob
 import shutil
 import os
+import re
 
 kml_files = glob.glob('Input/*.kml')
 if not kml_files:
@@ -172,10 +173,28 @@ for kml_file in kml_files:
         for element in root.findall('.//gx:' + element_name, namespaces):
             element.getparent().remove(element)
 
-    for element_name in ['styleUrl', 'Placemark', 'tessellate', 'outerBoundaryIs', 'open']:
+    for element_name in ['styleUrl', 'Placemark', 'tessellate', 'outerBoundaryIs', 'open', 'snippet']:
         for element in root.findall('.//kml:' + element_name, namespaces):
             element.getparent().extend(element)
             element.getparent().remove(element)
+
+    for name_element in root.findall('.//kml:name', namespaces):
+        name_text = name_element.text
+        if name_text.startswith('Twy ') and ':LineString' in name_text:
+            new_name = re.sub(r'Twy \[(\d+):LineString\]', r'Twy\1', name_text)
+            name_element.text = new_name
+
+    for name_element in root.findall('.//kml:name', namespaces):
+        name_text = name_element.text
+        if name_text.startswith('Bay ') and ':LineString' in name_text:
+            new_name = re.sub(r'Bay \[(\d+):LineString\]', r'Bay\1', name_text)
+            name_element.text = new_name
+
+    for name_element in root.findall('.//kml:name', namespaces):
+        name_text = name_element.text
+        if name_text.startswith('SB ') and ':LineString' in name_text:
+            new_name = re.sub(r'SB \[(\d+):LineString\]', r'SB\1', name_text)
+            name_element.text = new_name
 
     output_file_path = os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml')
     if os.path.exists(output_file_path):
@@ -214,14 +233,14 @@ for kml_file in kml_files:
             else:
                 break
 
-        move_number = 0
+        if temp_root.find(".//kml:name[.='Move']", namespaces) is not None:
+            process_polygon(f, 'Move', 'Ground_APR', 'MOVE', '5', 'Move', True, True)
+
+        move_number = 1
         while True:
-            if move_number == 0:
-                section_name = 'Move'
-            else:
-                section_name = 'Move{}'.format(move_number)
+            section_name = 'Move{}'.format(move_number)
             next_section_name = 'Move{}'.format(move_number + 1)
-            write_opening_map_tag = move_number == 0
+            write_opening_map_tag = move_number == 1
             write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
             if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
                 process_polygon(f, section_name, 'Ground_APR', 'MOVE', '5', section_name, write_opening_map_tag, write_closing_map_tag)
