@@ -255,7 +255,7 @@ for kml_file in kml_files:
             write_opening_map_tag = building_number == 1
             write_closing_map_tag = temp_root.find(".//kml:name[.='{}']".format(next_section_name), namespaces) is None
             if temp_root.find(".//kml:name[.='{}']".format(section_name), namespaces) is not None:
-                process_polygon(f, section_name, 'Ground_BLD', 'BLD', '4', section_name, write_opening_map_tag, write_closing_map_tag)
+                process_polygon(f, section_name, 'Ground_BLD', 'BLD', '3', section_name, write_opening_map_tag, write_closing_map_tag)
                 building_number += 1
             else:
                 break
