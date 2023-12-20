@@ -165,7 +165,7 @@ for kml_file in kml_files:
 
     namespaces = {'kml': 'http://www.opengis.net/kml/2.2', 'gx': 'http://www.google.com/kml/ext/2.2'}
 
-    for element_name in ['Style', 'StyleMap', 'LookAt']:
+    for element_name in ['Style', 'StyleMap', 'LookAt', 'Camera']:
         for element in root.findall('.//kml:' + element_name, namespaces):
             element.getparent().remove(element)
 
