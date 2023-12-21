@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Maps>
-    <Map Type="Ground_BAK" Name="SMR_WIII_BAK" Priority="6" Center="-06.123295+106.656476" CustomColourName="DeepLush">
+    <Map Type="Ground_BAK" Name="SMR_WAAA_BAK" Priority="6" Center="-06.123295+106.656476">
         <Infill Name="GrassBG">
             -06.128400+106.694247/
             -06.093340+106.680309/
@@ -8,7 +8,7 @@
             -06.153249+106.632309
         </Infill>
     </Map>
-    <Map Type="Ground_BAK" Name="SMR_WIII_HOLES" Priority="4" Center="-06.122449+106.641360" CustomColourName="DeepLush">
+    <Map Type="Ground_BAK" Name="SMR_WAAA_HOLES" Priority="4" Center="-06.122449+106.641360">
         <Infill Name="GrassHole1">
             -06.123257+106.639791/
             -06.123250+106.639910/
@@ -1603,7 +1603,7 @@
             -06.113741+106.646187
         </Infill>
     </Map>
-    <Map Type="Ground_APR" Name="SMR_WIII_MOVE" Priority="5" Center="-06.123197+106.656715">
+    <Map Type="Ground_APR" Name="SMR_WAAA_MOVE" Priority="5" Center="-06.123197+106.656715">
         <Infill Name="Move">
             -06.130552+106.674499/
             -06.130044+106.674296/
@@ -1851,7 +1851,7 @@
             -06.142801+106.643763
         </Infill>
     </Map>
-    <Map Type="Ground_BLD" Name="SMR_WIII_BLD" Priority="3" Center="-06.117333+106.664614">
+    <Map Type="Ground_BLD" Name="SMR_WAAA_BLD" Priority="3" Center="-06.117333+106.664614">
         <Infill Name="Bldg1">
             -06.112970+106.670779/
             -06.113131+106.670361/
@@ -2468,7 +2468,7 @@
             -06.128653+106.658435
         </Infill>
     </Map>
-    <Map Type="Ground_RWY" Name="SMR_WIII_RWY" Priority="4" Center="-06.136428+106.659017">
+    <Map Type="Ground_RWY" Name="SMR_WAAA_RWY" Priority="4" Center="-06.136428+106.659017">
         <Infill Name="Rwy1">
             -06.130581+106.674571/
             -06.129989+106.674334/
@@ -2488,7 +2488,7 @@
             -06.113614+106.644422
         </Infill>
     </Map>
-    <Map Type="Ground_INF" Name="SMR_WIII_TWY_CL" Priority="3" Center="-06.110913+106.657367" CustomColourName="SuperDuperLightGrey">
+    <Map Type="Ground_INF" Name="SMR_WAAA_TWY_CL" Priority="3" Center="-06.110913+106.657367" CustomColourName="TremendouslyLightGrey">
         <Line Name="Twy1">
         <Point>
             -06.115547+106.644214/
@@ -5368,7 +5368,7 @@
         </Point>
         </Line>
     </Map>
-    <Map Type="Ground_INF" Name="SMR_WIII_BAY_CL" Priority="3" Center="-06.133178+106.649869" CustomColourName="SuperDuperLightGrey">
+    <Map Type="Ground_INF" Name="SMR_WAAA_BAY_CL" Priority="3" Center="-06.133178+106.649869" CustomColourName="TremendouslyLightGrey">
         <Line Name="Bay1">
         <Point>
             -06.133006+106.649800/
@@ -6833,7 +6833,7 @@
         </Point>
         </Line>
     </Map>
-    <Map Type="Ground_INF" Name="SMR_WIII_SB" Priority="3" Center="-06.141429+106.642800" CustomColourName="RosenbauerRed" Width="2">
+    <Map Type="Ground_INF" Name="SMR_WAAA_SB" Priority="3" Center="-06.141429+106.642800" CustomColourName="RosenbauerRed" Width="2">
         <Line Name="SB1">
         <Point>
             -06.141613+106.642339/
@@ -6997,7 +6997,7 @@
         </Point>
         </Line>
     </Map>
-    <Map Type="Ground_INF" Name="SMR_WIII_BAY" Priority="1" Center="-06.124341+106.655055" CustomColourName="TremendouslyLightGrey">
+    <Map Type="Ground_INF" Name="SMR_WAAA_BAY" Priority="1" Center="-06.124341+106.655055" CustomColourName="TremendouslyLightGrey">
         <Label HasLeader="False" Alignment="Center" VerticalAlignment="Middle">
             <Point Name="R47">-06.133006+106.649800</Point>
             <Point Name="R48">-06.132868+106.650159</Point>
@@ -7240,7 +7240,7 @@
             <Point Name="G62">-06.113483+106.670193</Point>
         </Label>
     </Map>
-    <Map Type="Ground_INF" Name="SMR_WIII_TWY" Priority="1" Center="-06.123327+106.658464" CustomColourName="TremendouslyLightGrey">
+    <Map Type="Ground_INF" Name="SMR_WAAA_TWY" Priority="1" Center="-06.123327+106.658464" CustomColourName="TremendouslyLightGrey">
         <Label HasLeader="False" Alignment="Center" VerticalAlignment="Middle">
             <Point Name="N9">-06.122555+106.639107</Point>
             <Point Name="N8">-06.120123+106.643695</Point>
