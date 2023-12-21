@@ -219,7 +219,8 @@ for kml_file in kml_files:
     with open(os.path.join('Output', f'SMR_{os.path.splitext(os.path.basename(kml_file))[0]}.xml'), 'a') as f:  
         f.write('<?xml version="1.0" encoding="utf-8"?>\n<Maps>\n')
 
-        process_polygon(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG', True, True)
+        if temp_root.find(".//kml:name[.='GrassBG']", namespaces) is not None:
+            process_polygon(f, 'GrassBG', 'Ground_BAK', 'BAK','6', 'GrassBG', True, True)
 
         hole_number = 1
         while True:
@@ -307,9 +308,11 @@ for kml_file in kml_files:
                 stopbar_number += 1
             else:
                 break
+        if temp_root.find(".//kml:name[.='Bay']", namespaces) is not None:
+            process_label(f, 'Bay', 'Ground_INF', 'BAY', '1', True, True)
         
-        process_label(f, 'Bay', 'Ground_INF', 'BAY', '1', True, True)
-        process_label(f, 'Twy', 'Ground_INF', 'TWY', '1', True, True)
+        if temp_root.find(".//kml:name[.='Twy']", namespaces) is not None:
+            process_label(f, 'Twy', 'Ground_INF', 'TWY', '1', True, True)
 
         f.write('</Maps>\n')
     

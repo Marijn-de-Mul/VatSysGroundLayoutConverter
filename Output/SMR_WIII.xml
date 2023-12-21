@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Maps>
-    <Map Type="Ground_BAK" Name="SMR_WIII_BAK" Priority="6" Center="-06.123295+106.656476" CustomColourName="DeepLush">
-        <Infill Name="GrassBG">
-            -06.128400+106.694247/
-            -06.093340+106.680309/
-            -06.117689+106.618706/
-            -06.153249+106.632309
-        </Infill>
-    </Map>
     <Map Type="Ground_BAK" Name="SMR_WIII_HOLES" Priority="4" Center="-06.122449+106.641360" CustomColourName="DeepLush">
         <Infill Name="GrassHole1">
             -06.123257+106.639791/
@@ -1851,7 +1843,7 @@
             -06.142801+106.643763
         </Infill>
     </Map>
-    <Map Type="Ground_BLD" Name="SMR_WIII_BLD" Priority="4" Center="-06.117333+106.664614">
+    <Map Type="Ground_BLD" Name="SMR_WIII_BLD" Priority="3" Center="-06.117333+106.664614">
         <Infill Name="Bldg1">
             -06.112970+106.670779/
             -06.113131+106.670361/
