@@ -109,10 +109,6 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
         if map_name in [f'SB']:
             custom_color = ' CustomColourName="RosenbauerRed"'
             width = ' Width="2"'
-        elif map_name in [f'BAY_CL']: 
-            custom_color = ' CustomColourName="TremendouslyLightGrey"'
-        elif map_name in [f'TWY_CL']:
-            custom_color = ' CustomColourName="TremendouslyLightGrey"'
 
     if write_opening_map_tag:
         f.write(f'    <Map Type="{map_type}" Name="SMR_{airport_ICAO}_{map_name}" Priority="{priority}" Center="{center_coordinate}"{custom_color}{width}>\n')
