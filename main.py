@@ -42,7 +42,10 @@ def process_polygon(f, section_name, map_type, map_name, priority, infill_name, 
         longitudes.pop(0)
 
     def format_coordinate(lat, lon):
-        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+        if lon < 100:
+            return '{0:+010.6f}{1:+011.6f}'.format(lon, lat)
+        else:
+            return '{0:+010.6f}{1:+010.6f}'.format(lon, lat)
 
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
@@ -85,7 +88,10 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
         longitudes.pop(0)
 
     def format_coordinate(lat, lon):
-        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+        if lon < 100:
+            return '{0:+010.6f}{1:+011.6f}'.format(lon, lat)
+        else:
+            return '{0:+010.6f}{1:+010.6f}'.format(lon, lat)
 
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
@@ -100,7 +106,7 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
     if airport_ICAO.startswith('WI'):
         if map_name in [f'SB']:
             custom_color = ' CustomColourName="RosenbauerRed"'
-            width = ' Width="2"'
+            width = ' Width="4"'
         elif map_name in [f'BAY_CL']: 
             custom_color = ' CustomColourName="SuperDuperLightGrey"'
         elif map_name in [f'TWY_CL']:
@@ -108,7 +114,7 @@ def process_line(f, section_name, map_type, map_name, priority, infill_name, wri
     else: 
         if map_name in [f'SB']:
             custom_color = ' CustomColourName="RosenbauerRed"'
-            width = ' Width="2"'
+            width = ' Width="4"'
 
     if write_opening_map_tag:
         f.write(f'    <Map Type="{map_type}" Name="SMR_{airport_ICAO}_{map_name}" Priority="{priority}" Center="{center_coordinate}"{custom_color}{width}>\n')
@@ -145,7 +151,10 @@ def process_label(f, section_name, map_type, map_name, priority, write_opening_m
                 sibling = sibling.getnext()
 
     def format_coordinate(lat, lon):
-        return '{0:+010.6f}{1:+09.6f}'.format(lon, lat)
+        if lon < 100:
+            return '{0:+010.6f}{1:+011.6f}'.format(lon, lat)
+        else:
+            return '{0:+010.6f}{1:+010.6f}'.format(lon, lat)
 
     min_lat, max_lat = min(latitudes), max(latitudes)
     min_lon, max_lon = min(longitudes), max(longitudes)
