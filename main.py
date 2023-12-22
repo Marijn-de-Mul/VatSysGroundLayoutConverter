@@ -312,11 +312,9 @@ for kml_file in kml_files:
                 stopbar_number += 1
             else:
                 break
-        if temp_root.find(".//kml:name[.='Bay']", namespaces) is not None:
-            process_label(f, 'Bay', 'Ground_INF', 'BAY', '1', True, True)
-        
-        if temp_root.find(".//kml:name[.='Twy']", namespaces) is not None:
-            process_label(f, 'Twy', 'Ground_INF', 'TWY', '1', True, True)
+
+        process_label(f, 'Bay', 'Ground_INF', 'BAY', '1', True, True)
+        process_label(f, 'Twy', 'Ground_INF', 'TWY', '1', True, True)
 
         f.write('</Maps>\n')
     
